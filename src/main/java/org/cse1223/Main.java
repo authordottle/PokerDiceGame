@@ -132,22 +132,14 @@ public class Main {
     //  EXTRA CREDIT: Include in your scoring a Straight, which is 5 numbers in sequence
     //		[1,2,3,4,5] or [2,3,4,5,6].
     private static String getResult(int[] dice) {
-        int pos = 0;
-        int greatestnum = dice[pos];
-        int sum = dice[pos];
-        while (pos < 4) {
-            if (greatestnum < dice[pos + 1]) {
-                greatestnum = dice[pos + 1];
-            }
-            sum += dice[pos + 1]; // Extra credit for Straight
-            pos++;
-        }
+        int largestRolledDiceNumber = Arrays.stream(dice).max().getAsInt();
+        int rolledDiceNumberSum = Arrays.stream(dice).sum();
 
         int[] eachDiceNumberCountArray = getCounts(dice);
         int largestDiceNumberCount = Arrays.stream(eachDiceNumberCountArray).max().getAsInt();
 
+        int pos = 0;
         int numberTwoCount = 0;
-        pos = 0;
         while (pos < 5) {
             if (eachDiceNumberCountArray[pos] == 2) {
                 numberTwoCount++;
@@ -172,10 +164,10 @@ public class Main {
             } else {
                 output = "One pair";
             }
-        } else if ((sum / 5 == 4 && sum % 5 == 0) || (sum / 5 == 3 && sum % 5 == 0)) { // Extra credit for Straight
+        } else if ((rolledDiceNumberSum / 5 == 4 && rolledDiceNumberSum % 5 == 0) || (rolledDiceNumberSum / 5 == 3 && rolledDiceNumberSum % 5 == 0)) { // Extra credit for Straight
             output = "Straight";
         } else {
-            output = "Highest value " + greatestnum;
+            output = "Highest value " + largestRolledDiceNumber;
         }
 
         return output;
